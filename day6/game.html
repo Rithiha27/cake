@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rock Paper Scissors Game</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIlpi-MCC7vtcmGJB_xHtX26jvLHU9bHoFiw&s'); 
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    
+    .container {
+        text-align: center;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 320px;
+    }
+    
+    h1 {
+        margin-top: 0;
+    }
+    
+    .scoreboard {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+    
+    .choices {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 20px;
+    }
+    
+    .choice-btn {
+        font-size: 16px;
+        padding: 10px 20px;
+        cursor: pointer;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+    }
+    
+    .choice-btn:hover {
+        background-color: #45a049;
+    }
+    
+    .result {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .replay-btn {
+        background-color: #2196F3;
+        padding: 10px 20px;
+        border: none;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 20px;
+    }
+
+    .replay-btn:hover {
+        background-color: #0b7dda;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Rock Paper Scissors</h1>
+    <div class="scoreboard">
+        <div class="player-score">Player: <span id="player-score">0</span></div>
+        <div class="computer-score">Computer: <span id="computer-score">0</span></div>
+    </div>
+    <div class="choices">
+        <button class="choice-btn" onclick="playRound('rock')">Rock</button>
+        <button class="choice-btn" onclick="playRound('paper')">Paper</button>
+        <button class="choice-btn" onclick="playRound('scissors')">Scissors</button>
+    </div>
+    <div id="result" class="result"></div>
+    <button class="replay-btn" onclick="resetGame()">Replay</button>
+
+    <script>
+        const choices = ['rock', 'paper', 'scissors'];
+        let playerScore = 0;
+        let computerScore = 0;
+        const playerScoreDisplay = document.getElementById('player-score');
+        const computerScoreDisplay = document.getElementById('computer-score');
+        const resultDisplay = document.getElementById('result');
+        
+        function playRound(playerChoice) {
+            const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+            
+            if (playerChoice === computerChoice) {
+                displayResult("It's a tie!🙌🙌");
+            } else if ((playerChoice === 'rock' && computerChoice === 'scissors') ||
+                       (playerChoice === 'paper' && computerChoice === 'rock') ||
+                       (playerChoice === 'scissors' && computerChoice === 'paper')) {
+                playerScore++;
+                displayResult(`You win! ${playerChoice} beats ${computerChoice}🥳🥳`);
+            } else {
+                computerScore++;
+                displayResult(`Computer wins! ${computerChoice} beats ${playerChoice}😲😲`);
+            }
+            
+            updateScores();
+            checkGameOver();
+        }
+        
+        function updateScores() {
+            playerScoreDisplay.textContent = playerScore;
+            computerScoreDisplay.textContent = computerScore;
+        }
+        
+        function displayResult(message) {
+            resultDisplay.textContent = message;
+        }
+        
+        function checkGameOver() {
+            if (playerScore === 10) {
+                displayResult("You are the winner of the game!!🤩🤩");
+                disableButtons();
+                showReplayButton();
+            } else if (computerScore === 10) {
+                displayResult("Computer is the winner of the game!🤯🤯");
+                disableButtons();
+                showReplayButton();
+            }
+        }
+        
+        function disableButtons() {
+            const buttons = document.querySelectorAll('.choice-btn');
+            buttons.forEach(button => {
+                button.disabled = true;
+            });
+        }
+
+        function showReplayButton() {
+            const replayButton = document.querySelector('.replay-btn');
+            replayButton.style.display = 'block';
+        }
+
+        function resetGame() {
+            playerScore = 0;
+            computerScore = 0;
+            updateScores();
+            resultDisplay.textContent = "";
+            enableButtons();
+            hideReplayButton();
+        }
+
+        function enableButtons() {
+            const buttons = document.querySelectorAll('.choice-btn');
+            buttons.forEach(button => {
+                button.disabled = false;
+            });
+        }
+
+        function hideReplayButton() {
+            const replayButton = document.querySelector('.replay-btn');
+            replayButton.style.display = 'none';
+        }
+    </script>
+</div>
+</body>
+</html>

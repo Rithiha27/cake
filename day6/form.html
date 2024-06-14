@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9joK92eycUT2GvBYdRY0sI3bNt871ARCE3A&s');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+        }
+        button {
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <form id="myForm">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required>
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required>
+
+        <label for="country">Country:</label>
+        <select id="country" name="country" required>
+            <option value="" disabled selected>country</option>
+            <option value="USA">USA</option>
+            <option value="Canada">Canada</option>
+            <option value="Australia">Australia</option>
+            <option value="United Kingdom">United Kingdom</option>
+            <option value="Germany">Germany</option>
+            <option value="France">France</option>
+            <option value="Japan">Japan</option>
+            <option value="India">India</option>
+            <option value="Brazil">Brazil</option>
+            <option value="South Africa">South Africa</option>
+        </select>
+
+        <label for="state">State:</label>
+        <select id="state" name="state" required>
+            <option value="" disabled selected>state</option>
+            <option value="New York">New York</option>
+            <option value="California">California</option>
+            <option value="Texas">Texas</option>
+            <option value="Florida">Florida</option>
+            <option value="Illinois">Illinois</option>
+            <option value="Pennsylvania">Pennsylvania</option>
+            <option value="Ohio">Ohio</option>
+            <option value="Georgia">Georgia</option>
+            <option value="North Carolina">North Carolina</option>
+            <option value="Michigan">Michigan</option>
+        </select>
+
+        <button type="submit" id="createButton">Create</button>
+        <button type="button" onclick="resetForm()">Cancel</button>
+    </form>
+
+    <script>
+        const form = document.getElementById('myForm');
+        const createButton = document.getElementById('createButton');
+        const inputs = form.querySelectorAll('input, select');
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            let anyEmpty = false;
+            inputs.forEach(input => {
+                if (!input.value) {
+                    anyEmpty = true;
+                }
+            });
+            if (anyEmpty) {
+                alert('Please fill out all fields before submitting.');
+            } else {
+                alert('Form submitted successfully!');
+                form.reset();
+            }
+        });
+
+        function resetForm() {
+            form.reset();
+        }
+    </script>
+</body>
+</html>
